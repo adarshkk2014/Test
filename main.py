@@ -10,7 +10,6 @@ app = Flask(__name__)
 @app.route('/upload', methods=['GET'])
 def upload_file():
 
-    url = "https://ivr-calling-data-dev.s3.amazonaws.com/1a7fb06a-4813-11ee-a810-e68c095a7d26/Aetna_bulk.xlsx?AWSAccessKeyId=ASIA4JPVH5SVJBOQ2PMD&Signature=BbYXNn20rvdTHuYuvSLPh%2B5nalE%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEBAaCXVzLWVhc3QtMSJIMEYCIQCa%2FUuU0Txv%2Fk7bSBeG3KgQmPchuFoG4QSWmFtKLpKyqQIhAMbc9nc48GmMUfe935l58g1oL3TYSWfhJh0tszubTerBKp4DCNn%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMODQ1MDEyMjY2MTU0IgxAbIXMtJiysv5WxC0q8gLiu8fHyvuDa0Gz1L6G2lro4Q6xhpWcQypS10Ix%2FRNbtYYxerlNLU%2BW29LG8rEVjNqA6iSYCb%2F%2FIEjhzx62t3YDMVo%2BQf5%2FHPkOTl31Wco%2FV4jSNB%2FzmTN5zh%2FgdSCM62gluDqWK4F9zWRDKOYiDVVl%2BQRi%2BTEbM6GcPmb8BMSAEb0TlVny0fKXSfwiEYxu9Y5eCeh2RmT9mAnAGwWwfCvCO5g5w0LIYnaplE4CBJESHKyWkFslNVhfzg6yFCvfJgEGXoUNHEtWuHJcgT%2FR%2BSzhbZQqwguq9SadLLM5HWdBJq4MNKtV69JxicIKUL9EnHo1%2FpJUNjxZ%2BbmX7MfaHrdODwc8jM%2BhMvqtvPyoupVlye1eWMtOQ8mR7OIGqVP0VvYSWcwwDYzJ6uoG1jsUvcpfiQ%2BaXrVG3H%2BGY8MmhfVXQUTcUdIau%2Bm06iEpKcSJeEabWiL0wVI0eSCNOS6c09L14DY9vETAjxQvqhMlUhPf%2F%2B%2BzMLXjwqcGOpwBPQMEX9zlcOef7XexuEyWuDHmZ54mCmLnN4Jb3YZCL9oEiBVgyZp0XrmHKaaAWYFQcc3MORhnQY3lygB2cQkSmy8NNGwvWHI9fLv9yTkYYs9kg6NPypPB5BC2M0IxE6bZOiduhKwHnm4NzH58%2BS%2FcFD0lkVfmOAdB9C35TMumwx7wSBpiFVg7ikDrtcbt4tGhBkxmibuHhM3z1wNa&Expires=1693496638"
     # headers = {
     #     'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     # }
@@ -29,27 +28,26 @@ def upload_file():
 
     # url_params = requests.get(url_param)
     file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
-    with open(file_path, 'rb') as file:
-      # print(file_path, 'file path')
-      # print(file, "file")
-      if file:
-          return "file suces"
-      else:
-          return "failed"
+    try:
+        with open(file_path, 'rb') as file:
+            if file:
+                # print("URL Parameter2:", url_param)
+                response = requests.put(url_param, data=file)
+                # print("URL Parameter2:", url_param)
+                print(response.text, "res text")
+                if response.status_code == 200:
+                    return "File upload successful"
+                else:
+                    return f"File upload failed with status code: {response.status_code}"
+
+            else:
+                return "No file received"
+    except FileNotFoundError:
+        return "File not found", 404
+    except Exception as e:
+        return f"Error: {str(e)}", 500
 
 
-      if file:
-          # print("URL Parameter2:", url_param)
-          response = requests.put(url_param, data=file)
-          # print("URL Parameter2:", url_param)
-          print(response.text,"res text")
-          if response.status_code == 200:
-            return "File upload successful"
-          else:
-                return f"File upload failed with status code: {response.status_code}"
-
-      else:
-        return "No file received"
 
 
     return "Parameters received and processed successfully"
