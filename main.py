@@ -1,4 +1,4 @@
-
+import os
 from wsgiref.simple_server import WSGIServer
 import gevent.pywsgi
 
@@ -27,7 +27,10 @@ def upload_file():
     # print("File Parameter2:", file_param)
 
     # url_params = requests.get(url_param)
-    file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
+    # file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
+    current_directory = os.getcwd()
+    file_path = os.path.join(current_directory, file_param)
+
     try:
         with open(file_path, 'rb') as file:
             if file:
