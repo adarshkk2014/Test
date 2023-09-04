@@ -31,7 +31,7 @@ def upload_file():
     file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
     with open(file_path, 'rb') as file:
       print(file_path,'file path')
-      print(file ,"file")
+      print(file,"file")
       if file:
           print("URL Parameter2:", url_param)
           response = requests.put(url_param, data=file)
