@@ -24,23 +24,24 @@ def upload_file():
     if not file_param:
         return "File parameter is missing", 400
 
-    print("URL Parameter2:", url_param)
-    print("File Parameter2:", file_param)
+    # print("URL Parameter2:", url_param)
+    # print("File Parameter2:", file_param)
 
     # url_params = requests.get(url_param)
     file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
-    if file_path.startswith('/Users/K Adarsh'):
-        # It's a valid file path, proceed with your code
-        return "yes"
-    else:
-        return "Invalid file path", 400
     with open(file_path, 'rb') as file:
-      print(file_path,'file path')
-      print(file,"file")
+      # print(file_path, 'file path')
+      # print(file, "file")
       if file:
-          print("URL Parameter2:", url_param)
+          return "file suces"
+      else:
+          return "failed"
+
+
+      if file:
+          # print("URL Parameter2:", url_param)
           response = requests.put(url_param, data=file)
-          print("URL Parameter2:", url_param)
+          # print("URL Parameter2:", url_param)
           print(response.text,"res text")
           if response.status_code == 200:
             return "File upload successful"
