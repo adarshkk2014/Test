@@ -29,6 +29,11 @@ def upload_file():
 
     # url_params = requests.get(url_param)
     file_path = f'/Users/K Adarsh Kumar/Documents/{file_param}'
+    if file_path.startswith('/Users/K Adarsh'):
+        # It's a valid file path, proceed with your code
+        return "yes"
+    else:
+        return "Invalid file path", 400
     with open(file_path, 'rb') as file:
       print(file_path,'file path')
       print(file,"file")
